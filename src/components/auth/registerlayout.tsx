@@ -66,7 +66,7 @@ export default function RegisterLayout() {
     } catch (err) {
       setError((err as Error).message || "Gagal mendaftar.");
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
@@ -75,20 +75,20 @@ export default function RegisterLayout() {
       <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
         {/* Header */}
         <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold text-gray-800">Daftar Akun</h1>
+          <h1 className="text-2xl font-bold text-[#022F40]">Daftar Akun</h1>
           <p className="text-sm text-gray-500">Mulai perjalanan belajar Anda</p>
         </div>
 
         {/* Form */}
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <div>
-            <label className="block text-xs font-medium text-gray-700 mb-1">
+            <label className="block text-xs font-medium text-[#022F40] mb-1">
               Email
             </label>
             <input
               type="email"
               name="email"
-              className="text-gray-800 w-full rounded-md border border-gray-300 shadow-sm px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] transition"
+              className="text-[#022F40] w-full rounded-md border border-gray-300 shadow-sm px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#ADF5FF] transition"
               placeholder="nama@email.com"
               value={form.email}
               onChange={handleChange}
@@ -96,13 +96,13 @@ export default function RegisterLayout() {
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-700 mb-1">
+            <label className="block text-xs font-medium text-[#022F40] mb-1">
               Username
             </label>
             <input
               type="text"
               name="username"
-              className="text-gray-800 w-full rounded-md border border-gray-300 shadow-sm px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] transition"
+              className="text-[#022F40] w-full rounded-md border border-gray-300 shadow-sm px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#ADF5FF] transition"
               placeholder="username"
               value={form.username}
               onChange={handleChange}
@@ -110,14 +110,14 @@ export default function RegisterLayout() {
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-700 mb-1">
+            <label className="block text-xs font-medium text-[#022F40] mb-1">
               Password
             </label>
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
                 name="password"
-                className="text-gray-800 w-full rounded-md border border-gray-300 shadow-sm px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] transition pr-10"
+                className="text-[#022F40] w-full rounded-md border border-gray-300 shadow-sm px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#ADF5FF] transition pr-10"
                 placeholder="********"
                 value={form.password}
                 onChange={handleChange}
@@ -125,7 +125,7 @@ export default function RegisterLayout() {
               />
               <button
                 type="button"
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-[#2563eb] font-semibold"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-[#022F40] font-semibold"
                 onClick={() => setShowPassword((v) => !v)}
               >
                 {showPassword ? "Hide" : "Show"}
@@ -133,14 +133,14 @@ export default function RegisterLayout() {
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-700 mb-1">
+            <label className="block text-xs font-medium text-[#022F40] mb-1">
               Konfirmasi Password
             </label>
             <div className="relative">
               <input
                 type={showConfirmPassword ? "text" : "password"}
                 name="confirmPassword"
-                className="text-gray-800 w-full rounded-md border border-gray-300 shadow-sm px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] transition pr-10"
+                className="text-[#022F40] w-full rounded-md border border-gray-300 shadow-sm px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#ADF5FF] transition pr-10"
                 placeholder="********"
                 value={form.confirmPassword}
                 onChange={handleChange}
@@ -148,22 +148,22 @@ export default function RegisterLayout() {
               />
               <button
                 type="button"
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-[#2563eb] font-semibold"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-[#022F40] font-semibold"
                 onClick={() => setShowConfirmPassword((v) => !v)}
               >
                 {showConfirmPassword ? "Hide" : "Show"}
               </button>
             </div>
           </div>
-          <label className="flex items-center gap-2 text-xs text-gray-600">
+          <label className="flex items-center gap-2 text-xs text-[#022F40]">
             <input
               type="checkbox"
-              className="accent-[#2563eb]"
+              className="accent-[#ADF5FF]"
               checked={agree}
               onChange={(e) => setAgree(e.target.checked)}
             />
             Saya setuju dengan{" "}
-            <a href="#" className="text-[#2563eb] hover:underline">
+            <a href="#" className="text-[#022F40] hover:underline">
               Syarat & Ketentuan
             </a>
           </label>
@@ -172,7 +172,7 @@ export default function RegisterLayout() {
             type="submit"
             className={`w-full rounded-md py-2 font-semibold mt-2 transition shadow-md ${
               agree && !loading
-                ? "bg-[#2563eb] text-white hover:bg-[#174bbd] cursor-pointer"
+                ? "bg-[#ADF5FF] text-[#022F40] hover:bg-[#8EDAE6] cursor-pointer"
                 : "bg-gray-200 text-gray-400 cursor-not-allowed"
             }`}
             disabled={!agree || loading}
@@ -184,7 +184,7 @@ export default function RegisterLayout() {
         {/* Footer */}
         <div className="text-xs text-gray-500 mt-6 text-center">
           Sudah punya akun?{" "}
-          <Link href="/login" className="text-[#2563eb] hover:underline">
+          <Link href="/login" className="text-[#022F40] hover:underline">
             Masuk di sini
           </Link>
         </div>
@@ -192,7 +192,7 @@ export default function RegisterLayout() {
         {/* Back Button */}
         <button
           onClick={() => router.push("/")}
-          className="mt-4 w-full bg-gray-200 text-gray-700 rounded-md py-2 font-semibold hover:bg-gray-300 transition"
+          className="mt-4 w-full bg-[#ADF5FF] text-[#022F40] rounded-md py-2 font-semibold hover:bg-[#8EDAE6] transition"
         >
           Kembali ke Halaman Utama
         </button>

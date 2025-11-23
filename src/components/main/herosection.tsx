@@ -7,15 +7,13 @@ export default function HeroSection() {
 
   return (
     <div className="w-full min-h-screen bg-[var(--background)] font-poppins">
-     
-
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-8 md:px-20">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-10">
-            <div className="w-full md:w-[520px] h-[520px] bg-gray-200 rounded-lg overflow-hidden flex-shrink-0">
+            <div className="w-full md:w-[520px] h-[520px] rounded-lg overflow-hidden flex-shrink-0">
               <img
-                src="https://placehold.co/520x520"
+                src="/assets/home/hero_section (4).png"
                 alt="Sign language learning"
                 className="w-full h-full object-cover"
               />
@@ -61,9 +59,9 @@ export default function HeroSection() {
                 pengenalan gerakan.
               </p>
             </div>
-            <div className="w-full md:w-[520px] h-[350px] bg-gray-200 rounded-lg overflow-hidden flex-shrink-0">
+            <div className="w-full md:w-[520px] h-[350px] rounded-lg overflow-hidden flex-shrink-0">
               <img
-                src="https://placehold.co/520x350"
+                src="/assets/home/hero_section (3).png"
                 alt="Interactive learning"
                 className="w-full h-full object-cover"
               />
@@ -76,9 +74,9 @@ export default function HeroSection() {
       <section className="bg-[var(--background)] py-20 px-8 md:px-20">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-10">
-            <div className="w-full md:w-[520px] h-[492px] bg-gray-200 rounded-lg overflow-hidden flex-shrink-0">
+            <div className="w-full md:w-[360px] h-[342px] rounded-lg overflow-hidden flex-shrink-0">
               <img
-                src="https://placehold.co/520x492"
+                src="/assets/home/hero_section (2).png"
                 alt="Personalized learning"
                 className="w-full h-full object-cover"
               />
@@ -112,9 +110,9 @@ export default function HeroSection() {
             Belajar bahasa isyarat dengan Signoria fleksibel tanpa batas. Akses
             materi sesuai target dan gaya belajarmu sendiri.
           </p>
-          <div className="w-full max-w-[600px] mx-auto h-[490px] bg-gray-200 rounded-lg overflow-hidden mb-8">
+          <div className="w-full max-w-[600px] mx-auto h-[490px] rounded-lg overflow-hidden mb-8">
             <img
-              src="https://placehold.co/600x490"
+              src="/assets/home/hero_section (1).png"
               alt="Learn anywhere"
               className="w-full h-full object-cover"
             />

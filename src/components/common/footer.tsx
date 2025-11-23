@@ -8,7 +8,7 @@ export default function Footer() {
           {/* Logo Section */}
           <div className="max-w-[305px]">
             <Image
-              src="/placeholder-logo.png" // Replace with your logo path
+              src="assets/logo/logo_text.svg" 
               alt="Signoria Logo"
               width={150}
               height={50}
