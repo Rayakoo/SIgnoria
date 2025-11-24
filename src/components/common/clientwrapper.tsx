@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 import Navbar from "./navbar";
-import Footer from "./footer";import Sidebar from "./sidebar";
+import Footer from "./footer";
+import Sidebar from "./sidebar";
 import { getProfile } from "@/services/userservice";
 
 export default function ClientWrapper({ children }) {
@@ -35,48 +36,49 @@ export default function ClientWrapper({ children }) {
   const isKelas = pathname.startsWith("/belajar");
   const isKamus = pathname.startsWith("/kamus");
   const isPeringkat = pathname.startsWith("/peringkat");
-  
+  const isProfile = pathname.startsWith("/profile");
 
   // Layout untuk halaman auth
   if (hideNavAndFooter.includes(pathname)) {
     return <main>{children}</main>;
   }
 
-  // Layout untuk not-found (tanpa navbar/footer/sidebar)
-  if (isNotFound) {
-    return <main className="min-h-screen">{children}</main>;
+
+  // Conditional layout based on user login status
+  const isLoggedIn = !!user;
+
+  if (isLoggedIn&& !isProfile) {
+    return (
+      <div className="flex flex-col min-h-screen">
+        {/* Navbar */}
+        <Navbar />
+
+        {/* Konten Utama */}
+        <div className="flex w-full px-12 pt-6 gap-4">
+          {/* px-6 = padding horizontal, pt-6 = padding atas, gap-6 = jarak sidebar & children */}
+
+          {/* Sidebar */}
+          <div className="flex-[1]">
+            <Sidebar />
+          </div>
+
+          {/* Children */}
+          <main className="flex-[4]">{children}</main>
+        </div>
+        
+      </div>
+    );
+  }
+  if (isLoggedIn && isProfile) {
+     return (
+    <>
+      <Navbar />
+      <main>{children}</main>
+    </>
+  );
   }
 
-  // Layout untuk halaman kelas, kamus, peringkat (dengan sidebar)
-if (isKelas || isKamus || isPeringkat) {
-  return (
-    <div className="flex flex-col min-h-screen">
-
-      {/* Navbar */}
-      <Navbar />
-
-      {/* Konten Utama */}
-      <div className="flex w-full px-12 pt-6 gap-4">  
-        {/* px-6 = padding horizontal, pt-6 = padding atas, gap-6 = jarak sidebar & children */}
-
-        {/* Sidebar */}
-        <div className="flex-[1]">
-          <Sidebar />
-        </div>
-
-        {/* Children */}
-        <main className="flex-[4]">
-          {children}
-        </main>
-      </div>
-
-    </div>
-  );
-}
-
-
-
-  // Layout Landing Page (default)
+  // Default layout for landing page (not logged in)
   return (
     <>
       <Navbar />

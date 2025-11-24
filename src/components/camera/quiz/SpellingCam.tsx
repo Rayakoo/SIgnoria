@@ -39,6 +39,7 @@ export default function SibiSpellingQuizCamera({
   const [isFinished, setIsFinished] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isMediaPipeReady, setIsMediaPipeReady] = useState(false); // Track MediaPipe readiness
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const handsRef = useRef<any>(null);
@@ -143,7 +144,10 @@ export default function SibiSpellingQuizCamera({
           cameraRef.current = camera;
         }
 
-        if (isMounted) setIsLoading(false);
+        if (isMounted) {
+          setIsMediaPipeReady(true); // Set MediaPipe as ready
+          setIsLoading(false);
+        }
       } catch (err: any) {
         if (isMounted) {
           setError(`Gagal memuat MediaPipe: ${err.message}`);
@@ -306,59 +310,67 @@ export default function SibiSpellingQuizCamera({
   // ========= 6. UI =========
   return (
     <div className="flex flex-col items-center space-y-4 p-4 bg-white min-h-screen">
-      <h1 className="text-2xl font-bold text-black">SIBI Quiz - Tebak Kata</h1>
-      <h2 className="text-xl text-black font-semibold">
-        Kata Target: {targetWord}
-      </h2>
+      {isLoading && !isMediaPipeReady ? ( // Show loading state until MediaPipe is ready
+        <div className="flex items-center justify-center h-full">
+          <p className="text-lg text-gray-500">Memuat MediaPipe...</p>
+        </div>
+      ) : (
+        <>
+          <h1 className="text-2xl font-bold text-black">SIBI Quiz - Tebak Kata</h1>
+          <h2 className="text-xl text-black font-semibold">
+            Kata Target: {targetWord}
+          </h2>
 
-      <div className="flex space-x-2 text-3xl font-bold">
-        {progress.map((ch, i) => (
-          <span
-            key={i}
-            className={`px-2 py-1 border-b-2 ${
-              i === currentIndex ? "border-blue-500" : "border-gray-300"
-            }`}
-          >
-            {ch}
-          </span>
-        ))}
-      </div>
-
-      <div className="relative">
-        <video
-          ref={videoRef}
-          autoPlay
-          playsInline
-          width={400}
-          height={300}
-          className="rounded-lg border shadow-md"
-        />
-        {isLoading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 text-white">
-            Loading MediaPipe...
+          <div className="flex space-x-2 text-3xl font-bold">
+            {progress.map((ch, i) => (
+              <span
+                key={i}
+                className={`px-2 py-1 border-b-2 ${
+                  i === currentIndex ? "border-blue-500" : "border-gray-300"
+                }`}
+              >
+                {ch}
+              </span>
+            ))}
           </div>
-        )}
-      </div>
 
-      {error && <p className="text-red-600">{error}</p>}
-      <p className="text-lg">{message}</p>
+          <div className="relative">
+            <video
+              ref={videoRef}
+              autoPlay
+              playsInline
+              width={400}
+              height={300}
+              className="rounded-lg border shadow-md"
+            />
+            {isLoading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 text-white">
+                Loading MediaPipe...
+              </div>
+            )}
+          </div>
 
-      {isFinished && (
-        <button
-          className="px-4 py-2 bg-green-600 text-white rounded"
-          onClick={() => {
-            currentIndexRef.current = 0;
-            setCurrentIndex(0);
-            setProgress(Array(targetWord.length).fill("_"));
-            setIsFinished(false);
-            setIsProcessing(false);
-            setMessage(
-              `Tunjukkan huruf: ${targetWord[0].toUpperCase()}`
-            );
-          }}
-        >
-          Ulangi Kuis 🔁
-        </button>
+          {error && <p className="text-red-600">{error}</p>}
+          <p className="text-lg">{message}</p>
+
+          {isFinished && (
+            <button
+              className="px-4 py-2 bg-green-600 text-white rounded"
+              onClick={() => {
+                currentIndexRef.current = 0;
+                setCurrentIndex(0);
+                setProgress(Array(targetWord.length).fill("_"));
+                setIsFinished(false);
+                setIsProcessing(false);
+                setMessage(
+                  `Tunjukkan huruf: ${targetWord[0].toUpperCase()}`
+                );
+              }}
+            >
+              Ulangi Kuis 🔁
+            </button>
+          )}
+        </>
       )}
     </div>
   );

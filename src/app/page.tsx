@@ -1,11 +1,21 @@
-import Image from "next/image";
 import HeroSection from "../components/main/herosection";
+import Workshop from "../components/main/workshop";
+import { cookies } from "next/headers";
+import { getProfile } from "@/services/userservice";
 
-export default function Home() {
+export default async function Home() {
+  const cookieStore = cookies();
+  const token = (await cookieStore).get("access_token")?.value || "";
+  let user = null;
+
+  if (token) {
+    user = await getProfile(token);
+  }
+
   return (
-    <>
-      <HeroSection />
-    </>
+    <div>
+      {user ? <Workshop /> : <HeroSection />}
+    </div>
   );
 }
 

@@ -57,7 +57,7 @@ export default function SibiNumberPlayground() {
   const [confidence, setConfidence] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isMediaPipeReady, setIsMediaPipeReady] = useState<boolean>(false);
+  const [isMediaPipeReady, setIsMediaPipeReady] = useState<boolean>(false); // Track MediaPipe readiness
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const handsRef = useRef<any>(null);
@@ -140,10 +140,10 @@ export default function SibiNumberPlayground() {
       try {
         await loadMediaPipe();
 
-        if (!isMounted) return;
-
-        setIsMediaPipeReady(true);
-        setIsLoading(false);
+        if (isMounted) {
+          setIsMediaPipeReady(true); // Set MediaPipe as ready
+          setIsLoading(false);
+        }
       } catch (err: any) {
         if (isMounted) {
           setError(err.message || "Gagal memuat MediaPipe. Coba refresh halaman.");
@@ -223,41 +223,48 @@ export default function SibiNumberPlayground() {
   // ==== UI ====
   return (
     <div className="flex flex-col items-center space-y-6 w-full">
-      <h1 className="text-2xl font-bold text-[#022F40]">Deteksi Angka</h1>
-      <div className="relative w-full max-w-lg shadow-xl rounded-xl overflow-hidden border-4 border-gray-200">
-        <video
-          ref={videoRef}
-          autoPlay
-          playsInline
-          width={640}
-          height={480}
-          className="w-full h-auto object-cover"
-        />
+      {isLoading && !isMediaPipeReady ? ( // Show loading state until MediaPipe is ready
+        <div className="flex items-center justify-center h-full">
+          <p className="text-lg text-gray-500">Memuat MediaPipe...</p>
+        </div>
+      ) : (
+        <>
+          <div className="relative w-full max-w-lg shadow-xl rounded-xl overflow-hidden border-4 border-gray-200">
+            <video
+              ref={videoRef}
+              autoPlay
+              playsInline
+              width={640}
+              height={480}
+              className="w-full h-auto object-cover"
+            />
 
-        {isLoading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-gray-900/70">
-            <p className="text-white text-lg">Memuat model Angka...</p>
+            {isLoading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-gray-900/70">
+                <p className="text-white text-lg">Memuat model Angka...</p>
+              </div>
+            )}
+
+            {error && (
+              <div className="absolute inset-0 flex items-center justify-center bg-red-800/80">
+                <p className="text-white text-lg">{error}</p>
+              </div>
+            )}
           </div>
-        )}
 
-        {error && (
-          <div className="absolute inset-0 flex items-center justify-center bg-red-800/80">
-            <p className="text-white text-lg">{error}</p>
+          <div className="bg-[#022F40] text-white p-4 rounded-xl shadow-lg w-full max-w-lg text-center">
+            <p className="text-4xl font-extrabold mb-1">{predictedLabel}</p>
+            <p className="text-sm font-semibold">
+              {confidence > 0 ? `Keyakinan: ${confidence}%` : "Menunggu Isyarat..."}
+            </p>
           </div>
-        )}
-      </div>
 
-      <div className="bg-[#022F40] text-white p-4 rounded-xl shadow-lg w-full max-w-lg text-center">
-        <p className="text-4xl font-extrabold mb-1">{predictedLabel}</p>
-        <p className="text-sm font-semibold">
-          {confidence > 0 ? `Keyakinan: ${confidence}%` : "Menunggu Isyarat..."}
-        </p>
-      </div>
-
-      <div className="text-sm text-gray-500 mt-4 text-center">
-        <p>Mode Deteksi: ANGKA (0-9).</p>
-        <p>Prediksi diperbarui setiap 0.4 detik.</p>
-      </div>
+          <div className="text-sm text-gray-500 mt-4 text-center">
+            <p>Mode Deteksi: ANGKA (0-9).</p>
+            <p>Prediksi diperbarui setiap 0.4 detik.</p>
+          </div>
+        </>
+      )}
     </div>
   );
 }

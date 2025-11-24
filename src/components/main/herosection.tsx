@@ -28,7 +28,7 @@ export default function HeroSection() {
               <div className="space-y-2">
                 <button
                   onClick={() => router.push("/login")}
-                  className="w-full px-6 py-3 bg-[var(--primary)] text-[var(--secondary)] rounded-xl font-bold hover:bg-[#033d54] transition-colors"
+                  className="w-full px-6 py-3 bg-[var(--primary)] text-white rounded-xl font-bold hover:bg-[#033d54] transition-colors"
                 >
                   MULAI
                 </button>

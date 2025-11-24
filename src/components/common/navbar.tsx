@@ -50,7 +50,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <Image
-            src={user ? "assets/logo/logo_putih.svg" : "assets/logo/logo.svg"}
+            src={user ? "/assets/logo/logo_putih.svg" : "/assets/logo/logo.svg"} // Ensure the path starts with "/"
             alt="Signoria Logo"
             width={32}
             height={32}
