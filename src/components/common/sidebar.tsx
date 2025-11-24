@@ -31,11 +31,12 @@ export default function Sidebar() {
   }, []);
 
   return (
+    <CardWrapper>
     <aside className="flex flex-col gap-4">
       {/* Profile Card */}
-      <CardWrapper>
+      
         <ProfileCard user={user} />
-      </CardWrapper>
+     
 
       {/* Leaderboard Card */}
         <LeaderboardCard remainingLessons={user?.remainingLessons || 3} />
@@ -47,5 +48,6 @@ export default function Sidebar() {
           dailyWords={user?.dailyWords || 0}
         />
     </aside>
+     </CardWrapper>
   );
 }

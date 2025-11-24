@@ -7,6 +7,7 @@ import Navbar from "./navbar";
 import Footer from "./footer";
 import Sidebar from "./sidebar";
 import { getProfile } from "@/services/userservice";
+import Workshop from "../main/workshop";
 
 export default function ClientWrapper({ children }) {
   const pathname = usePathname();
@@ -37,6 +38,7 @@ export default function ClientWrapper({ children }) {
   const isKamus = pathname.startsWith("/kamus");
   const isPeringkat = pathname.startsWith("/peringkat");
   const isProfile = pathname.startsWith("/profile");
+  const isRoot = pathname === "/";
 
   // Layout untuk halaman auth
   if (hideNavAndFooter.includes(pathname)) {
@@ -47,7 +49,7 @@ export default function ClientWrapper({ children }) {
   // Conditional layout based on user login status
   const isLoggedIn = !!user;
 
-  if (isLoggedIn&& !isProfile) {
+  if (isLoggedIn&& !isProfile && isRoot) {
     return (
       <div className="flex flex-col min-h-screen">
         {/* Navbar */}
@@ -76,6 +78,28 @@ export default function ClientWrapper({ children }) {
       <main>{children}</main>
     </>
   );
+  }
+  if (isLoggedIn && isRoot) {
+ <div className="flex flex-col min-h-screen">
+        {/* Navbar */}
+        <Navbar />
+
+        {/* Konten Utama */}
+        <div className="flex w-full px-12 pt-6 gap-4">
+          {/* px-6 = padding horizontal, pt-6 = padding atas, gap-6 = jarak sidebar & children */}
+
+          {/* Sidebar */}
+          <div className="flex-[1]">
+            <Sidebar />
+          </div>
+
+          {/* Children */}
+          {/* <main className="flex-[4]">{children}</main> */}
+          <Workshop />
+        </div>
+        
+      </div>
+
   }
 
   // Default layout for landing page (not logged in)
