@@ -49,7 +49,7 @@ export default function ClientWrapper({ children }) {
   // Conditional layout based on user login status
   const isLoggedIn = !!user;
 
-  if (isLoggedIn&& !isProfile && isRoot) {
+  if (isLoggedIn&& !isProfile && !isRoot) {
     return (
       <div className="flex flex-col min-h-screen">
         {/* Navbar */}
