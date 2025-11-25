@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { fetchQuizDetail, submitQuizAnswer, submitQuiz, submitCameraQuizAnswer } from "@/services/quizservice";
+import { fetchQuizDetail, submitQuizAnswer, submitQuiz, submitCameraQuizAnswer, getAttemptProgress } from "@/services/quizservice";
 import dynamic from "next/dynamic";
+import { get } from "http";
 
 // Define prop types for the dynamically imported components
 interface AlphabetPlaygroundProps {
@@ -55,8 +56,9 @@ export default function QuizDetailClient({ id, attemptId }: QuizDetailClientProp
     const loadQuiz = async () => {
       try {
         const data = await fetchQuizDetail(id);
+        const progress = await getAttemptProgress(id, attemptId);
         setQuiz(data);
-        //setCurrentIndex(data.answered_questions); // Start from the correct question
+        setCurrentIndex(progress.answered_questions); // Start from the correct question
       } catch (err) {
         setError("Gagal memuat data quiz");
       } finally {
